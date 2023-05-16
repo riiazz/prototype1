@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://HitBox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://0x72_DungeonTilesetII_v1.6.png" type="Texture" id=2]
+[ext_resource path="res://Arrow.cs" type="Script" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 2.0
+height = 16.0
+
+[node name="Arrow" groups=["Projectile"] instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+rotation = 1.5708
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 321, 200, 13, 25 )
+
+[node name="CollisionShape2D" parent="." index="1"]
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="2"]
+
+[connection signal="area_entered" from="." to="." method="OnArrowAreaEntered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="OnVisibilityNotifier2DScreenExited"]
