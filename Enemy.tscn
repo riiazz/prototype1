@@ -57,3 +57,11 @@ shape = SubResource( 1 )
 reset_on_save = false
 anims/Idle = SubResource( 2 )
 anims/RESET = SubResource( 3 )
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true

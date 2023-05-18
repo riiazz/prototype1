@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://HitBox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://0x72_DungeonTilesetII_v1.6.png" type="Texture" id=2]
+[ext_resource path="res://Axe.cs" type="Script" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 7.0
+height = 0.0
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 72.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AxeSprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -72.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Throw"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AxeSprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -72.0, -144.0, -216.0, -288.0, -355.0 ]
+}
+
+[node name="Axe" groups=["Projectile"] instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="AxeSprite" type="Sprite" parent="." index="0"]
+rotation = -1.05168
+texture = ExtResource( 2 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 339, 160, 11, 16 )
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+reset_on_save = false
+anims/RESET = SubResource( 2 )
+anims/Throw = SubResource( 3 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="3"]
+visible = false
+
+[connection signal="area_entered" from="." to="." method="OnAxeAreaEntered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="OnVisibilityNotifier2DScreenExited"]

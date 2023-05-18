@@ -131,15 +131,15 @@ flip_h = true
 [node name="CollisionShape2D" parent="Enemy" index="1"]
 visible = false
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 2 )]
+[node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 48, 112 )
 
-[node name="Sprite" parent="KinematicBody2D" index="0"]
+[node name="Sprite" parent="Player" index="0"]
 frame = 1
 region_rect = Rect2( 129, 45, 31, 20 )
 
-[node name="AnimationPlayer" parent="KinematicBody2D" index="2"]
+[node name="AnimationPlayer" parent="Player" index="2"]
 reset_on_save = false
 
 [editable path="Enemy"]
-[editable path="KinematicBody2D"]
+[editable path="Player"]
