@@ -53,7 +53,10 @@ tracks/0/keys = {
 }
 
 [node name="Axe" groups=["Projectile"] instance=ExtResource( 1 )]
+collision_layer = 32
+collision_mask = 40
 script = ExtResource( 3 )
+SPEED = 250
 
 [node name="AxeSprite" type="Sprite" parent="." index="0"]
 rotation = -1.05168

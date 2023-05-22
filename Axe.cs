@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Axe : Area2D
+public class Axe : HitBox
 {
     [Export]
     private int SPEED = 250;

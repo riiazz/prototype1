@@ -9,7 +9,10 @@ radius = 2.0
 height = 16.0
 
 [node name="Arrow" groups=["Projectile"] instance=ExtResource( 1 )]
+collision_layer = 32
+collision_mask = 48
 script = ExtResource( 3 )
+SPEED = 500
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 rotation = 1.5708

@@ -13,8 +13,10 @@ public class Enemy : KinematicBody2D
     private Movement movement;
     private Timer timer;
     private Timer attackTimer;
+    private Stats stats;
     public override void _Ready()
     {
+        stats = GetNode<Stats>("Stats");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animationPlayer.Play("Idle");
         timer = GetNode<Timer>("Timer");
@@ -73,5 +75,15 @@ public class Enemy : KinematicBody2D
                 timer.Start();
             }
         }
+    }
+
+    public void OnHurtBoxAreaEntered(Area2D area){
+        if(area.IsInGroup("Projectile")){
+            stats.Health -= (area as Arrow).Damage;
+        }
+    }
+
+    public void OnStatsNoHealthEventHandler(){
+        QueueFree();
     }
 }

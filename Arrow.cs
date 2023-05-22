@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Arrow : Area2D
+public class Arrow : HitBox
 {
     [Export]
     public int SPEED { get; set; } = 500;
