@@ -14,9 +14,12 @@ public class Enemy : KinematicBody2D
     private Timer timer;
     private Timer attackTimer;
     private Stats stats;
+    private Label hp;
     public override void _Ready()
     {
         stats = GetNode<Stats>("Stats");
+        hp = GetNode<Label>("Label");
+        hp.Text = stats.Health.ToString();
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animationPlayer.Play("Idle");
         timer = GetNode<Timer>("Timer");
@@ -80,6 +83,7 @@ public class Enemy : KinematicBody2D
     public void OnHurtBoxAreaEntered(Area2D area){
         if(area.IsInGroup("Projectile")){
             stats.Health -= (area as Arrow).Damage;
+            hp.Text = stats.Health.ToString();
         }
     }
 

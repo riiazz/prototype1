@@ -9,8 +9,14 @@ public class Player : KinematicBody2D
     private Movement movement;
     private AnimationPlayer animationPlayer;
     private Timer timer;
+    private Stats stats;
+    private Label hp;
     public override void _Ready()
     {
+        stats = GetNode<Stats>("/root/PlayerStats");
+        stats.Connect("NoHealthEventHandler", this, "queue_free");
+        hp = GetNode<Label>("Label");
+        hp.Text = stats.Health.ToString();
         movement = new Movement();
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animationPlayer.Play("Idle");
@@ -55,6 +61,13 @@ public class Player : KinematicBody2D
             Area2D arrow = Arrow.Instance<Area2D>();
             GetTree().CurrentScene.AddChild(arrow);
             arrow.GlobalPosition = GlobalPosition;
+        }
+    }
+
+    public void OnHurtBoxAreaEntered(Area2D area){
+        if(area.IsInGroup("Projectile")){
+            stats.Health -= (area as HitBox).Damage;
+            hp.Text = stats.Health.ToString();
         }
     }
 }
