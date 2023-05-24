@@ -8,6 +8,10 @@ enum Direction{
 public class Enemy : KinematicBody2D
 {
     private PackedScene Axe = ResourceLoader.Load<PackedScene>("res://Axe.tscn");
+    private const string MOVESFX = "res://enemyMove.wav";
+    private const string HURTSFX = "res://hitHurt enemy.wav";
+    private const string SHOOTSFX = "res://axe.wav";
+    private EntitySfx sfx;
     private Direction randomDirection = Direction.RIGHT;
     private AnimationPlayer animationPlayer;
     private Movement movement;
@@ -32,6 +36,7 @@ public class Enemy : KinematicBody2D
         };
         timer.Start();
         attackTimer.Start();
+        sfx = GetNode<EntitySfx>("Sfx");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -43,6 +48,7 @@ public class Enemy : KinematicBody2D
                 GetTree().CurrentScene.AddChild(axe);
                 axe.GlobalPosition = GlobalPosition;
                 attackTimer.Start();
+                sfx.ChangeSFX(SHOOTSFX);
             }
         }
     }
@@ -67,6 +73,7 @@ public class Enemy : KinematicBody2D
 
         if(randomDirection == Direction.LEFT || randomDirection == Direction.RIGHT){
             if(GlobalPosition.x + movement.PIXEL_MOVEMENT >= movement.LIMIT_LEFT && GlobalPosition.x + movement.PIXEL_MOVEMENT <= movement.LIMIT_RIGHT){
+                sfx.ChangeSFX(MOVESFX);
                 GlobalPosition = GlobalPosition + new Vector2(movement.PIXEL_MOVEMENT, 0);
                 timer.Start();
             }
@@ -74,6 +81,7 @@ public class Enemy : KinematicBody2D
 
         if(randomDirection == Direction.UP || randomDirection == Direction.DOWN){
             if(GlobalPosition.y + movement.PIXEL_MOVEMENT >= movement.LIMIT_UP && GlobalPosition.y + movement.PIXEL_MOVEMENT <= movement.LIMIT_DOWN){
+                sfx.ChangeSFX(MOVESFX);
                 GlobalPosition = GlobalPosition + new Vector2(0, movement.PIXEL_MOVEMENT);
                 timer.Start();
             }
@@ -84,6 +92,7 @@ public class Enemy : KinematicBody2D
         if(area.IsInGroup("Projectile")){
             stats.Health -= (area as Arrow).Damage;
             hp.Text = stats.Health.ToString();
+            sfx.ChangeSFX(HURTSFX);
         }
     }
 

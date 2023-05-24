@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://HitBox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://0x72_DungeonTilesetII_v1.6.png" type="Texture" id=2]
 [ext_resource path="res://Arrow.cs" type="Script" id=3]
+[ext_resource path="res://EntitySfx.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 2.0
@@ -25,6 +26,8 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="2"]
+
+[node name="AudioStreamPlayer" parent="." index="3" instance=ExtResource( 4 )]
 
 [connection signal="area_entered" from="." to="." method="OnArrowAreaEntered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="OnVisibilityNotifier2DScreenExited"]
