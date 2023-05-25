@@ -3,6 +3,7 @@ using System;
 
 public class Player : KinematicBody2D
 {
+    private PackedScene DeathEffect = ResourceLoader.Load<PackedScene>("res://DeathEffect.tscn");
     private PackedScene Arrow = ResourceLoader.Load<PackedScene>("res://Arrow.tscn");
     private PackedScene Bow = ResourceLoader.Load<PackedScene>("res://Bow.tscn");
     private const string MOVESFX = "res://playerMove.wav";
@@ -19,6 +20,7 @@ public class Player : KinematicBody2D
     {
         stats = GetNode<Stats>("/root/PlayerStats");
         stats.Connect("NoHealthEventHandler", this, "queue_free");
+        stats.Connect("NoHealthEventHandler", this, "DeathState");
         hp = GetNode<Label>("Label");
         hp.Text = stats.Health.ToString();
         movement = new Movement();
@@ -95,5 +97,13 @@ public class Player : KinematicBody2D
             hp.Text = stats.Health.ToString();
             audioStreamPlayer.ChangeSFX(HURTSFX);
         }
+    }
+
+    public void DeathState(){
+        DeathEffect deathEffect = DeathEffect.Instance<DeathEffect>();
+        GetTree().CurrentScene.AddChild(deathEffect);
+        deathEffect.GlobalPosition = GlobalPosition;
+        deathEffect.Play();
+        deathEffect.ChangeSFX("res://explosion.wav");
     }
 }

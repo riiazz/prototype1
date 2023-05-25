@@ -7,6 +7,7 @@ enum Direction{
 
 public class Enemy : KinematicBody2D
 {
+    private PackedScene DeathEffect = ResourceLoader.Load<PackedScene>("res://DeathEffect.tscn");
     private PackedScene Axe = ResourceLoader.Load<PackedScene>("res://Axe.tscn");
     private const string MOVESFX = "res://enemyMove.wav";
     private const string HURTSFX = "res://hitHurt enemy.wav";
@@ -98,5 +99,10 @@ public class Enemy : KinematicBody2D
 
     public void OnStatsNoHealthEventHandler(){
         QueueFree();
+        DeathEffect deathEffect = DeathEffect.Instance<DeathEffect>();
+        GetTree().CurrentScene.AddChild(deathEffect);
+        deathEffect.GlobalPosition = GlobalPosition;
+        deathEffect.Play();
+        deathEffect.ChangeSFX("res://explosion enemy.wav");
     }
 }
